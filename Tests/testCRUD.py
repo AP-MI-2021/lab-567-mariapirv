@@ -1,3 +1,6 @@
+from Domain.rezervare import getId, getNume, getClasa, getPret, getCheckin
+from Logic.CRUD import adaugaRezervare, stergeRezervare, getById
+
 def testAdaugaRezervare():
     lista = []
     lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista)

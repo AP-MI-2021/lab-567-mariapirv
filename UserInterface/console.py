@@ -1,3 +1,6 @@
+from Logic.CRUD import adaugaRezervare, stergeRezervare, getById, modificaRezervare
+from Domain.rezervare import toString
+
 def printMenu():
     print("1. Adaugare rezervare")
     print("2. Stergere rezervare")
@@ -39,7 +42,7 @@ def runMenu(lista):
         elif optiune == "2":
             lista = uiStergeRezervare(lista)
         elif optiune == "3":
-            lista = uiModificaPrajitura(lista)
+            lista = uiModificaRezervare(lista)
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":

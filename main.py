@@ -1,4 +1,12 @@
+from Logic.CRUD import adaugaRezervare
+from Tests.testAll import runAllTests
+from UserInterface.console import runMenu
+
 def main():
-    pass
+    runAllTests()
+    lista = []
+    lista = adaugaRezervare("1", "londra", "economy", 300, "da", lista)
+    lista = adaugaRezervare("2", "madrid", "business", 100, "nu", lista)
+    runMenu(lista)
 
 main()

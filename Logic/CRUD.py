@@ -1,3 +1,5 @@
+from Domain.rezervare import creeazaRezervare, getId
+
 def adaugaRezervare(id, nume, clasa, pret, checkin, lista)
     '''
     adauga o rezervare intr-o lista
@@ -45,7 +47,7 @@ def modificaRezervare(id, nume, clasa, pret, checkin, lista)
     :return: lista modificata
     '''
     listaNoua = []
-    for rezervare is lista:
+    for rezervare in lista:
         if getId(rezervare) == id:
             rezervareNoua = creeazaRezervare(id, nume, clasa, pret, checkin)
             listaNoua.append(rezervareNoua)
