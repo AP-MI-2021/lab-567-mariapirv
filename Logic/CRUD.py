@@ -16,7 +16,7 @@ def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
 
 def getById(id, lista):
     '''
-    gaseste o rezervarea cu id-ul dat intr-o lista
+    gaseste o rezervare cu id-ul dat intr-o lista
     :param id: string
     :param lista: lista de rezervari
     :return: rezervarea cu id-ul dat din lista sau None, daca aceasta nu exista
