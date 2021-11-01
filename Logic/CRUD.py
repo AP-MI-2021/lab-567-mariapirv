@@ -1,6 +1,6 @@
 from Domain.rezervare import creeazaRezervare, getId
 
-def adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
     '''
     adauga o rezervare intr-o lista
     :param id: string
@@ -35,7 +35,7 @@ def stergeRezervare(id, lista):
     '''
     return [rezervare for rezervare in lista if getId(rezervare) != id]
 
-def modificaRezervare(id, nume, clasa, pret, checkin, lista)
+def modificaRezervare(id, nume, clasa, pret, checkin, lista):
     '''
     modifica o rezervare cu id-ul dat
     :param id: id-ul rezervarii

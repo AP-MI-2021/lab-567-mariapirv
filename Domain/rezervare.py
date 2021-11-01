@@ -9,7 +9,7 @@ def creeazaRezervare (id, nume, clasa, pret, checkin):
     :return: un dictionar ce contine o rezervare
     '''
     lista = [id, nume, clasa, pret, checkin]
-    return
+    return lista
 
 def getId(rezervare):
     return rezervare[0]
