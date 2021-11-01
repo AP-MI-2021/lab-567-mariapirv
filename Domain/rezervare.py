@@ -8,28 +8,23 @@ def creeazaRezervare (id, nume, clasa, pret, checkin):
     :param checkin: string
     :return: un dictionar ce contine o rezervare
     '''
-    return {
-        "id": id,
-        "nume": nume,
-        "clasa": clasa,
-        "pret": pret,
-        "checkin": checkin
-    }
+    lista = [id, nume, clasa, pret, checkin]
+    return
 
 def getId(rezervare):
-    return rezervare("id")
+    return rezervare[0]
 
 def getNume(rezervare):
-    return rezervare("nume")
+    return rezervare[1]
 
 def getClasa(rezervare):
-    return rezervare("clasa")
+    return rezervare[2]
 
 def getPret(rezervare):
-    return rezervare("pret")
+    return rezervare[3]
 
 def getCheckin(rezervare):
-    return rezervare("checkin")
+    return rezervare[4]
 
 def toString(rezervare):
     return "Id: {}, Nume: {}, Clasa: {}, Pret: {}, Checkin: {}".format(
