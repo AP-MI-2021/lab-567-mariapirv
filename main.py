@@ -6,7 +6,8 @@ def main():
     runAllTests()
     lista = []
     lista = adaugaRezervare("1", "londra", "economy", 300, "da", lista)
-    lista = adaugaRezervare("2", "madrid", "business", 100, "nu", lista)
+    lista = adaugaRezervare("2", "madrid", "business", 100, "da", lista)
+
     runMenu(lista)
 
 main()
