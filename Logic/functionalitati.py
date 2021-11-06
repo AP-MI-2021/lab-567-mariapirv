@@ -48,3 +48,44 @@ def ieftinireRezervariCuProcentaj(procent, lista):
         else:
             new_list.append(rezervare)
     return new_list
+
+def pretMaxPeClasa(lista):
+    '''
+    determina prețul maxim pentru fiecare clasă
+    :param lista: lista de rezervari
+    :return: un dictionar care contine preturile maxime pentru fiecare clasa
+    '''
+    rezultat = {}
+    for rezervare in lista:
+        pret = getPret(rezervare)
+        clasa = getClasa(rezervare)
+        if clasa in rezultat:
+            if pret > rezultat[clasa]:
+                rezultat[clasa] = pret
+        else:
+            rezultat[clasa] = pret
+    return rezultat
+
+def ordonareDescresPret(lista):
+    '''
+    ordoneaza rezervările descrescător după preț
+    :param lista: lista de rezervari
+    :return: lista de rezervari ordonata dupa pret
+    '''
+    return sorted(lista, key=lambda rezervare: getPret(rezervare), reverse=True)
+
+def sumaPerNume(lista):
+    '''
+    determina suma preturilor pentru fiecare nume
+    :param lista: lista de rezervari
+    :return: un dictionar care contine suma preturilor pentru fiecare nume
+    '''
+    rezultat = {}
+    for rezervare in lista:
+        nume = getNume(rezervare)
+        if nume in rezultat:
+            rezultat[nume] = rezultat[nume] + getPret(rezervare)
+        else:
+            rezultat[nume] = getPret(rezervare)
+    return rezultat
+

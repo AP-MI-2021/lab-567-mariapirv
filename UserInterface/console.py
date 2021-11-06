@@ -1,6 +1,7 @@
 from Logic.CRUD import stergeRezervare, modificaRezervare, adaugaRezervare
 from Domain.rezervare import toString
-from Logic.functionalitati import transformareClasaSuperioara, ieftinireRezervariCuProcentaj
+from Logic.functionalitati import transformareClasaSuperioara, ieftinireRezervariCuProcentaj, pretMaxPeClasa, \
+    ordonareDescresPret, sumaPerNume
 
 
 def printMenu():
@@ -9,6 +10,9 @@ def printMenu():
     print("3. Modificare rezervare")
     print("4. Trecerea tuturor rezervărilor făcute pe un nume citit la o clasă superioară")
     print("5. Ieftinirea tuturor rezervărilor la care s-a făcut checkin cu un procentaj citit.")
+    print("6. Determinarea prețului maxim pentru fiecare clasă.")
+    print("7. Ordonarea rezervărilor descrescător după preț.")
+    print("8. Afișarea sumelor prețurilor pentru fiecare nume.")
     print("a. Afisare rezervari")
     print("x. Iesire")
 
@@ -40,6 +44,20 @@ def uiIeftinireRezervariCuProcentaj(lista):
     procentaj = float(input("Dati procentajul cu care doriti sa se faca ieftinirea: "))
     return ieftinireRezervariCuProcentaj(float(procentaj), lista)
 
+def uiPretMaxPeClasa(lista):
+    rezultat = pretMaxPeClasa(lista)
+    for clasa in rezultat:
+        print("Clasa {} are pretul maxim {}".format(clasa, rezultat[clasa]))
+
+def uiOrdonareDescresPret(lista):
+    rezultat = ordonareDescresPret(lista)
+    showAll(rezultat)
+
+def uiSumaPerNume(lista):
+    rezultat = sumaPerNume(lista)
+    for nume in rezultat:
+        print("{} are suma preturilor {}".format(nume, rezultat[nume]))
+
 def showAll(lista):
     for rezervare in lista:
         print(toString(rezervare))
@@ -59,6 +77,12 @@ def runMenu(lista):
             lista = uiTransformareClasaSuperioara(lista)
         elif optiune == "5":
             lista = uiIeftinireRezervariCuProcentaj(lista)
+        elif optiune == "6":
+            uiPretMaxPeClasa(lista)
+        elif optiune == "7":
+            uiOrdonareDescresPret(lista)
+        elif optiune == "8":
+            uiSumaPerNume(lista)
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":
