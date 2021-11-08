@@ -3,7 +3,6 @@ from Domain.rezervare import toString
 from Logic.functionalitati import transformareClasaSuperioara, ieftinireRezervariCuProcentaj, pretMaxPeClasa, \
     ordonareDescresPret, sumaPerNume
 
-
 def printMenu():
     print("1. Adaugare rezervare")
     print("2. Stergere rezervare")
@@ -17,32 +16,44 @@ def printMenu():
     print("x. Iesire")
 
 def uiAdaugaRezervare(lista):
-    id = input("Dati id-ul: ")
-    nume = input("Dati numele: ")
-    clasa = input("Dati clasa: ")
-    pret = float(input("Dati pretul: "))
-    checkin = input("Ati facut checkin-ul?: ")
-    return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+    try:
+        id = input("Dati id-ul: ")
+        nume = input("Dati numele: ")
+        clasa = input("Dati clasa: ")
+        pret = float(input("Dati pretul: "))
+        checkin = input("Ati facut checkin-ul?: ")
+        return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 def uiStergeRezervare(lista):
     id = input("Dati id-ul rezervarii de sters: ")
     return stergeRezervare(id, lista)
 
 def uiModificaRezervare(lista):
-    id = input("Dati id-ul rezervarii de modificat: ")
-    nume = input("Dati noul nume: ")
-    clasa = input("Dati noua clasa: ")
-    pret = float(input("Dati noul pret: "))
-    checkin = input("Ati facut checkin-ul la noua rezervare?: ")
-    return modificaRezervare(id, nume, clasa, pret, checkin, lista)
+    try:
+        id = input("Dati id-ul rezervarii de modificat: ")
+        nume = input("Dati noul nume: ")
+        clasa = input("Dati noua clasa: ")
+        pret = float(input("Dati noul pret: "))
+        checkin = input("Ati facut checkin-ul la noua rezervare?: ")
+        return modificaRezervare(id, nume, clasa, pret, checkin, lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 def uiTransformareClasaSuperioara(lista):
     numeCitit = input("Dati numele la care doriti sa faceti trecerea la clasa superioara a rezervarii: ")
     return transformareClasaSuperioara(numeCitit, lista)
 
+
 def uiIeftinireRezervariCuProcentaj(lista):
-    procentaj = float(input("Dati procentajul cu care doriti sa se faca ieftinirea: "))
-    return ieftinireRezervariCuProcentaj(float(procentaj), lista)
+    try:
+        procentaj = float(input("Dati procentajul cu care doriti sa se faca ieftinirea: "))
+        return ieftinireRezervariCuProcentaj(float(procentaj), lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
 
 def uiPretMaxPeClasa(lista):
     rezultat = pretMaxPeClasa(lista)

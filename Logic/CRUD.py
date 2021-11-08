@@ -11,6 +11,8 @@ def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
     :param lista: lista de rezervari
     :return: o lista care contine elementele noi, cat si cele vechi
     '''
+    if getById(id, lista) is not None:
+        raise ValueError("Id-ul exista deja!")
     rezervare = creeazaRezervare(id, nume, clasa, pret, checkin)
     return lista + [rezervare]
 
