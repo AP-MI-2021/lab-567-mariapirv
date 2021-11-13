@@ -1,7 +1,8 @@
 from Logic.CRUD import stergeRezervare, modificaRezervare, adaugaRezervare
 from Domain.rezervare import toString
 from Logic.functionalitati import transformareClasaSuperioara, ieftinireRezervariCuProcentaj, pretMaxPeClasa, \
-    ordonareDescresPret, sumaPerNume
+    ordonareDescresPret, sumaPerNume, do_redo, do_undo
+
 
 def printMenu():
     print("1. Adaugare rezervare")
@@ -127,14 +128,12 @@ def runMenu(lista):
             uiSumaPerNume(lista,undolist,redolist)
         elif optiune == "u":
             if len(undolist) > 0:
-                redolist.append(lista)
-                lista = undolist.pop()
+                lista = do_undo(lista,undolist,redolist)
             else:
-                print("Nu se poate face und!")
+                print("Nu se poate face undo!")
         elif optiune == "r":
             if len(redolist) > 0:
-                undolist.append(lista)
-                lista = redolist.pop()
+                lista = do_redo(lista,undolist,redolist)
             else:
                 print("Nu se poate face redo!")
         elif optiune == "a":
