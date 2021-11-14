@@ -89,3 +89,16 @@ def sumaPerNume(lista):
             rezultat[nume] = getPret(rezervare)
     return rezultat
 
+def do_undo(lista,undolist,redolist):
+        if undolist:
+            top_undo = undolist.pop()
+            redolist.append(lista)
+            return top_undo
+        return None
+
+def do_redo(lista,undolist,redolist):
+    if redolist:
+        top_redo = redolist.pop()
+        undolist.append(lista)
+        return top_redo
+    return None
