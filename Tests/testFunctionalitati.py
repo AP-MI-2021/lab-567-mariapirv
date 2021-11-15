@@ -79,26 +79,53 @@ def test_undo_redo():
     undolist = []
     redolist = []
     lista = adauga_rezervare("1", "londra", "economy", 200, "da", lista)
+
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')]]
+
     lista = adauga_rezervare("2", "barcelona", "economy plus", 50, "da", lista)
+
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
+                     [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')]]
+
     lista = adauga_rezervare("3", "milano", "economy", 290, "nu", lista)
 
     assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
                      [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')],
                      [('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')]]
 
-    lista = transformare_clasa_superioara("londra", lista)
+    lista = do_undo(lista, undolist, redolist)
 
-    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy plus'), ('pret', 200), ('checkin', 'da')],
-                     [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')],
-                     [('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')]]
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
+                     [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')]]
 
     lista = do_undo(lista, undolist, redolist)
+
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')]]
+
+    lista = do_undo(lista, undolist, redolist)
+
+    assert lista == []
+
+    lista = do_undo(lista, undolist, redolist)
+
+    assert lista == []
+
+    lista = adauga_rezervare("1", "londra", "economy", 200, "da", lista)
+    lista = adauga_rezervare("2", "barcelona", "economy plus", 50, "da", lista)
+    lista = adauga_rezervare("3", "milano", "economy", 290, "nu", lista)
+
+    lista = do_redo(lista, undolist, redolist)
 
     assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
                      [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')],
                      [('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')]]
 
     lista = do_undo(lista, undolist, redolist)
+    lista = do_undo(lista, undolist, redolist)
+
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')]]
+
+    lista = do_redo(lista, undolist, redolist)
 
     assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
                      [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')]]
@@ -109,20 +136,29 @@ def test_undo_redo():
                      [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')],
                      [('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')]]
 
-    lista = ordonare_descres_pret(lista)
+    lista = do_undo(lista, undolist, redolist)
+    lista = do_undo(lista, undolist, redolist)
 
-    assert lista == [[('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')],
-                     [('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
-                     [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')]]
+    lista = adauga_rezervare("4", "paris", "business", 1000, "nu", lista)
+
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
+                     [('id', '4'), ('nume', 'paris'), ('clasa', 'business'), ('pret', 1000), ('checkin', 'nu')]]
 
     lista = do_undo(lista, undolist, redolist)
 
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')]]
+
+    lista = do_undo(lista, undolist, redolist)
+
+    assert lista == []
+
+    lista = do_redo(lista, undolist, redolist)
+    lista = do_redo(lista, undolist, redolist)
+
     assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
-                     [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')],
-                     [('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')]]
+                     [('id', '4'), ('nume', 'paris'), ('clasa', 'business'), ('pret', 1000), ('checkin', 'nu')]]
 
     lista = do_redo(lista, undolist, redolist)
 
-    assert lista == [[('id', '3'), ('nume', 'milano'), ('clasa', 'economy'), ('pret', 290), ('checkin', 'nu')],
-                     [('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
-                     [('id', '2'), ('nume', 'barcelona'), ('clasa', 'economy plus'), ('pret', 50), ('checkin', 'da')]]
+    assert lista == [[('id', '1'), ('nume', 'londra'), ('clasa', 'economy'), ('pret', 200), ('checkin', 'da')],
+                     [('id', '4'), ('nume', 'paris'), ('clasa', 'business'), ('pret', 1000), ('checkin', 'nu')]]
