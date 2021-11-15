@@ -1,4 +1,4 @@
-from Logic.CRUD import adaugaRezervare, modificaRezervare, stergeRezervare
+from Logic.CRUD import adauga_rezervare, modifica_rezervare, sterge_rezervare
 from UserInterface.console import showAll
 
 
@@ -13,7 +13,7 @@ def newMenu(lista):
                 camp = optiune.split(",")
                 if camp[0] == "add":
                     try:
-                        lista = adaugaRezervare(camp[1], camp[2], camp[3], camp[4], camp[5], lista)
+                        lista = adauga_rezervare(camp[1], camp[2], camp[3], camp[4], camp[5], lista)
                     except ValueError as ve:
                         print("Eroare : {}".format(ve))
                     except IndexError as ie:
@@ -22,12 +22,12 @@ def newMenu(lista):
                     showAll(lista)
                 elif camp[0] == "modify":
                     try:
-                        lista = modificaRezervare(camp[1], camp[2], camp[3], camp[4], camp[5], lista)
+                        lista = modifica_rezervare(camp[1], camp[2], camp[3], camp[4], camp[5], lista)
                     except ValueError as ve:
                         print("Eroare : {}".format(ve))
                     except IndexError as ie:
                         print("Eroare: {}".format(ie))
                 elif camp[0] == "delete":
-                    lista = stergeRezervare(camp[1], lista)
+                    lista = sterge_rezervare(camp[1], lista)
                 else:
                     print("Optiune gresita! Reincercati!")

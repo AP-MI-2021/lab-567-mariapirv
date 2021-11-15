@@ -1,10 +1,10 @@
-from Logic.CRUD import stergeRezervare, modificaRezervare, adaugaRezervare
-from Domain.rezervare import toString
-from Logic.functionalitati import transformareClasaSuperioara, ieftinireRezervariCuProcentaj, pretMaxPeClasa, \
-    ordonareDescresPret, sumaPerNume, do_redo, do_undo
+from Logic.CRUD import sterge_rezervare, modifica_rezervare, adauga_rezervare
+from Domain.rezervare import to_string
+from Logic.functionalitati import transformare_clasa_superioara, ieftinire_rezervari_cu_procentaj, pret_max_pe_clasa, \
+    ordonare_descres_pret, suma_per_nume, do_redo, do_undo
 
 
-def printMenu():
+def print_menu():
     print("1. Adaugare rezervare")
     print("2. Stergere rezervare")
     print("3. Modificare rezervare")
@@ -18,15 +18,16 @@ def printMenu():
     print("a. Afisare rezervari")
     print("x. Iesire")
 
-def uiAdaugaRezervare(lista, undolist, redolist):
+
+def ui_adauga_rezervare(lista, undolist, redolist):
     try:
-        id = input("Dati id-ul: ")
+        id_rezervare = input("Dati id-ul: ")
         nume = input("Dati numele: ")
         clasa = input("Dati clasa: ")
         pret = float(input("Dati pretul: "))
         checkin = input("Ati facut checkin-ul?: ")
 
-        rezultat = adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+        rezultat = adauga_rezervare(id_rezervare, nume, clasa, pret, checkin, lista)
         undolist.append(lista)
         redolist.clear()
         return rezultat
@@ -34,23 +35,25 @@ def uiAdaugaRezervare(lista, undolist, redolist):
         print("Eroare: {}".format(ve))
         return lista
 
-def uiStergeRezervare(lista, undolist, redolist):
-    id = input("Dati id-ul rezervarii de sters: ")
 
-    rezultat = stergeRezervare(id, lista)
+def ui_sterge_rezervare(lista, undolist, redolist):
+    id_rezervare = input("Dati id-ul rezervarii de sters: ")
+
+    rezultat = sterge_rezervare(id_rezervare, lista)
     undolist.append(lista)
     redolist.clear()
     return rezultat
 
-def uiModificaRezervare(lista, undolist, redolist):
+
+def ui_modifica_rezervare(lista, undolist, redolist):
     try:
-        id = input("Dati id-ul rezervarii de modificat: ")
+        id_madificare = input("Dati id-ul rezervarii de modificat: ")
         nume = input("Dati noul nume: ")
         clasa = input("Dati noua clasa: ")
         pret = float(input("Dati noul pret: "))
         checkin = input("Ati facut checkin-ul la noua rezervare?: ")
 
-        rezultat =  modificaRezervare(id, nume, clasa, pret, checkin, lista)
+        rezultat = modifica_rezervare(id_madificare, nume, clasa, pret, checkin, lista)
         undolist.append(lista)
         redolist.clear()
         return rezultat
@@ -58,82 +61,88 @@ def uiModificaRezervare(lista, undolist, redolist):
         print("Eroare: {}".format(ve))
         return lista
 
-def uiTransformareClasaSuperioara(lista, undolist, redolist):
-    numeCitit = input("Dati numele la care doriti sa faceti trecerea la clasa superioara a rezervarii: ")
-    rezultat =  transformareClasaSuperioara(numeCitit, lista)
+
+def ui_transformare_clasa_superioara(lista, undolist, redolist):
+    nume_citit = input("Dati numele la care doriti sa faceti trecerea la clasa superioara a rezervarii: ")
+    rezultat = transformare_clasa_superioara(nume_citit, lista)
     undolist.append(lista)
     redolist.clear()
     return rezultat
 
 
-def uiIeftinireRezervariCuProcentaj(lista, undolist, redolist):
+def ui_ieftinire_rezervari_cu_procentaj(lista, undolist, redolist):
     try:
         procentaj = float(input("Dati procentajul cu care doriti sa se faca ieftinirea: "))
-        rezultat = ieftinireRezervariCuProcentaj(float(procentaj), lista)
+        rezultat = ieftinire_rezervari_cu_procentaj(float(procentaj), lista)
         undolist.append(lista)
         redolist.clear()
         return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
 
-def uiPretMaxPeClasa(lista, undolist, redolist):
-    rezultat = pretMaxPeClasa(lista)
+
+def ui_pret_max_pe_clasa(lista, undolist, redolist):
+    rezultat = pret_max_pe_clasa(lista)
     for clasa in rezultat:
         print("Clasa {} are pretul maxim {}".format(clasa, rezultat[clasa]))
     undolist.append(lista)
     redolist.clear()
     return rezultat
 
+
 def uiOrdonareDescresPret(lista, undolist, redolist):
-    rezultat = ordonareDescresPret(lista)
+    rezultat = ordonare_descres_pret(lista)
     showAll(rezultat)
     undolist.append(lista)
     redolist.clear()
     return rezultat
 
+
 def uiSumaPerNume(lista, undolist, redolist):
-    rezultat = sumaPerNume(lista)
+    rezultat = suma_per_nume(lista)
     for nume in rezultat:
         print("{} are suma preturilor {}".format(nume, rezultat[nume]))
     undolist.append(lista)
     redolist.clear()
     return rezultat
 
+
 def showAll(lista):
     for rezervare in lista:
-        print(toString(rezervare))
+        print(to_string(rezervare))
+
 
 def runMenu(lista):
     undolist = []
     redolist = []
     while True:
-        printMenu()
+        print_menu()
         optiune = input("Dati optiunea: ")
 
         if optiune == "1":
-            lista = uiAdaugaRezervare(lista,undolist,redolist)
+            lista = ui_adauga_rezervare(lista, undolist, redolist)
         elif optiune == "2":
-            lista = uiStergeRezervare(lista,undolist,redolist)
+            lista = ui_sterge_rezervare(lista, undolist, redolist)
         elif optiune == "3":
-            lista = uiModificaRezervare(lista,undolist,redolist)
+            lista = ui_modifica_rezervare(lista, undolist, redolist)
         elif optiune == "4":
-            lista = uiTransformareClasaSuperioara(lista,undolist,redolist)
+            lista = ui_transformare_clasa_superioara(lista, undolist, redolist)
         elif optiune == "5":
-            lista = uiIeftinireRezervariCuProcentaj(lista,undolist,redolist)
+            lista = ui_ieftinire_rezervari_cu_procentaj(lista, undolist, redolist)
         elif optiune == "6":
-            uiPretMaxPeClasa(lista,undolist,redolist)
+            ui_pret_max_pe_clasa(lista, undolist, redolist)
         elif optiune == "7":
-            lista = uiOrdonareDescresPret(lista,undolist,redolist)
+            lista = uiOrdonareDescresPret(lista, undolist, redolist)
         elif optiune == "8":
-            uiSumaPerNume(lista,undolist,redolist)
+            uiSumaPerNume(lista, undolist, redolist)
         elif optiune == "u":
             if len(undolist) > 0:
-                lista = do_undo(lista,undolist,redolist)
+                lista = do_undo(lista, undolist, redolist)
             else:
                 print("Nu se poate face undo!")
         elif optiune == "r":
             if len(redolist) > 0:
-                lista = do_redo(lista,undolist,redolist)
+                lista = do_redo(lista, undolist, redolist)
             else:
                 print("Nu se poate face redo!")
         elif optiune == "a":

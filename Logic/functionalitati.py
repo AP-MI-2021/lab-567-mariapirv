@@ -1,64 +1,59 @@
-from Domain.rezervare import getNume, getClasa, getId, getPret, getCheckin, creeazaRezervare
+from Domain.rezervare import get_nume, get_clasa, get_id, get_pret, get_checkin, creeaza_rezervare
 
-def transformareClasaSuperioara(nume, lista):
-    '''
+
+def transformare_clasa_superioara(nume, lista):
+    """
     transforma intr-o clasa superioara rezervarile cu numele citit
     :param nume: numele unei rezervari
     :param lista: lista rezervarilor
-    :return: o noua lista transformata cu rezervarile cu un anumit nume la o clasa superioara, restul ramanand nemodificate
-    '''
+    :return: o noua lista transformata cu rezervarile cu un anumit nume la o clasa superioara,
+    restul ramanand nemodificate
+    """
     new_list = []
     for rezervare in lista:
-        if getNume(rezervare) == nume:
-            if getClasa(rezervare) == 'economy':
+        if get_nume(rezervare) == nume:
+            if get_clasa(rezervare) == 'economy':
                 clasa_noua = 'economy plus'
             else:
                 clasa_noua = 'business'
-            rezervareNoua = creeazaRezervare(
-                getId(rezervare),
-                getNume(rezervare),
-                clasa_noua,
-                getPret(rezervare),
-                getCheckin(rezervare)
-            )
-            new_list.append(rezervareNoua)
+            rezervare_noua = creeaza_rezervare(get_id(rezervare), get_nume(rezervare), clasa_noua, get_pret(rezervare),
+                                               get_checkin(rezervare))
+            new_list.append(rezervare_noua)
         else:
             new_list.append(rezervare)
     return new_list
 
-def ieftinireRezervariCuProcentaj(procent, lista):
-    '''
+
+def ieftinire_rezervari_cu_procentaj(procent, lista):
+    """
     ieftineste toate rezervărilor la care s-a făcut checkin cu un procentaj citit
     :param procent: procentul cu care se va face ieftinirea
     :param lista: lista de rezervari
-    :return: o lista noua cu toate rezrevarile la care s-a facut checkin cu un anumit procentaj, restul ramanad nemodificate
-    '''
+    :return: o lista noua cu toate rezrevarile la care s-a facut checkin cu un anumit procentaj,
+    restul ramanad nemodificate
+    """
     new_list = []
     for rezervare in lista:
-        if getCheckin(rezervare) == "da":
-            pret = getPret(rezervare)
-            rezervareNoua = creeazaRezervare(
-                getId(rezervare),
-                getNume(rezervare),
-                getClasa(rezervare),
-                pret - (procent * pret / 100),
-                getCheckin(rezervare)
-            )
-            new_list.append(rezervareNoua)
+        if get_checkin(rezervare) == "da":
+            pret = get_pret(rezervare)
+            rezervare_noua = creeaza_rezervare(get_id(rezervare), get_nume(rezervare), get_clasa(rezervare),
+                                               pret - (procent * pret / 100), get_checkin(rezervare))
+            new_list.append(rezervare_noua)
         else:
             new_list.append(rezervare)
     return new_list
 
-def pretMaxPeClasa(lista):
-    '''
+
+def pret_max_pe_clasa(lista):
+    """
     determina prețul maxim pentru fiecare clasă
     :param lista: lista de rezervari
     :return: un dictionar care contine preturile maxime pentru fiecare clasa
-    '''
+    """
     rezultat = {}
     for rezervare in lista:
-        pret = getPret(rezervare)
-        clasa = getClasa(rezervare)
+        pret = get_pret(rezervare)
+        clasa = get_clasa(rezervare)
         if clasa in rezultat:
             if pret > rezultat[clasa]:
                 rezultat[clasa] = pret
@@ -66,51 +61,43 @@ def pretMaxPeClasa(lista):
             rezultat[clasa] = pret
     return rezultat
 
-def ordonareDescresPret(lista):
-    '''
+
+def ordonare_descres_pret(lista):
+    """
     ordoneaza rezervările descrescător după preț
     :param lista: lista de rezervari
     :return: lista de rezervari ordonata dupa pret
-    '''
-    return sorted(lista, key=lambda rezervare: getPret(rezervare), reverse=True)
+    """
+    return sorted(lista, key=lambda rezervare: get_pret(rezervare), reverse=True)
 
-def sumaPerNume(lista):
-    '''
+
+def suma_per_nume(lista):
+    """
     determina suma preturilor pentru fiecare nume
     :param lista: lista de rezervari
     :return: un dictionar care contine suma preturilor pentru fiecare nume
-    '''
+    """
     rezultat = {}
     for rezervare in lista:
-        nume = getNume(rezervare)
+        nume = get_nume(rezervare)
         if nume in rezultat:
-            rezultat[nume] = rezultat[nume] + getPret(rezervare)
+            rezultat[nume] = rezultat[nume] + get_pret(rezervare)
         else:
-            rezultat[nume] = getPret(rezervare)
+            rezultat[nume] = get_pret(rezervare)
     return rezultat
 
-def do_undo(lista,undolist,redolist):
-        if undolist:
-            top_undo = undolist.pop()
-<<<<<<< HEAD
-            redolist.append(top_undo)
-            return top_undo
-        return lista
-=======
-            redolist.append(lista)
-            return top_undo
-        return None
->>>>>>> eccca752e9dd7980411f599c54423e46d94c6959
 
-def do_redo(lista,undolist,redolist):
+def do_undo(lista, undolist, redolist):
+    if undolist:
+        top_undo = undolist.pop()
+        redolist.append(lista)
+        return top_undo
+    return None
+
+
+def do_redo(lista, undolist, redolist):
     if redolist:
         top_redo = redolist.pop()
-<<<<<<< HEAD
-        undolist.append(top_redo)
-        return top_redo
-    return lista
-=======
         undolist.append(lista)
         return top_redo
     return None
->>>>>>> eccca752e9dd7980411f599c54423e46d94c6959

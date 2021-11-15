@@ -1,41 +1,47 @@
-def creeazaRezervare (id, nume, clasa, pret, checkin):
-    '''
+def creeaza_rezervare(id_rezervare, nume, clasa, pret, checkin):
+    """
     creeaza un dictionar ce reprezinta o rezervare
-    :param id: string
+    :param id_rezervare: string
     :param nume: string
     :param clasa: string
     :param pret: float
     :param checkin: string
     :return: un dictionar ce contine o rezervare
-    '''
+    """
     return {
-        "id":id,
-        "nume":nume,
-        "clasa":clasa,
-        "pret":pret,
-        "checkin":checkin
+        "id": id_rezervare,
+        "nume": nume,
+        "clasa": clasa,
+        "pret": pret,
+        "checkin": checkin
     }
 
-def getId(rezervare):
+
+def get_id(rezervare):
     return rezervare["id"]
 
-def getNume(rezervare):
+
+def get_nume(rezervare):
     return rezervare["nume"]
 
-def getClasa(rezervare):
+
+def get_clasa(rezervare):
     return rezervare["clasa"]
 
-def getPret(rezervare):
+
+def get_pret(rezervare):
     return rezervare["pret"]
 
-def getCheckin(rezervare):
+
+def get_checkin(rezervare):
     return rezervare["checkin"]
 
-def toString(rezervare):
+
+def to_string(rezervare):
     return "Id: {}, Nume: {}, Clasa: {}, Pret: {}, Checkin: {}".format(
-        getId(rezervare),
-        getNume(rezervare),
-        getClasa(rezervare),
-        getPret(rezervare),
-        getCheckin(rezervare)
+        get_id(rezervare),
+        get_nume(rezervare),
+        get_clasa(rezervare),
+        get_pret(rezervare),
+        get_checkin(rezervare)
     )

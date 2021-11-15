@@ -1,48 +1,50 @@
-from Domain.rezervare import getId, getNume, getClasa, getPret, getCheckin
-from Logic.CRUD import adaugaRezervare, stergeRezervare, getById, modificaRezervare
+from Domain.rezervare import get_id, get_nume, get_clasa, get_pret, get_checkin
+from Logic.CRUD import adauga_rezervare, sterge_rezervare, get_by_id, modifica_rezervare
 
-def testAdaugaRezervare():
+
+def test_adauga_rezervare():
     lista = []
-    lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista)
+    lista = adauga_rezervare("1", "londra", "economy", 200, "da", lista)
 
-    assert getId(lista[0]) == "1"
-    assert getNume(lista[0]) == "londra"
-    assert getClasa(lista[0]) == "economy"
-    assert getPret(lista[0]) == 200
-    assert getCheckin(lista[0]) == "da"
+    assert get_id(lista[0]) == "1"
+    assert get_nume(lista[0]) == "londra"
+    assert get_clasa(lista[0]) == "economy"
+    assert get_pret(lista[0]) == 200
+    assert get_checkin(lista[0]) == "da"
 
-def testStergeRezervare():
+
+def test_sterge_rezervare():
     lista = []
-    lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista)
-    lista = adaugaRezervare("2", "bucuresti", "economy plus", 50, "da", lista)
+    lista = adauga_rezervare("1", "londra", "economy", 200, "da", lista)
+    lista = adauga_rezervare("2", "bucuresti", "economy plus", 50, "da", lista)
 
-    lista = stergeRezervare("1", lista)
+    lista = sterge_rezervare("1", lista)
 
     assert len(lista) == 1
-    assert getById("1", lista) is None
-    assert getById("2", lista) is not None
+    assert get_by_id("1", lista) is None
+    assert get_by_id("2", lista) is not None
 
-def testModificaRezervare():
+
+def test_modifica_rezervare():
     lista = []
-    lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista)
-    lista = adaugaRezervare("2", "bucuresti", "economy plus", 50, "da", lista)
+    lista = adauga_rezervare("1", "londra", "economy", 200, "da", lista)
+    lista = adauga_rezervare("2", "bucuresti", "economy plus", 50, "da", lista)
 
-    lista = modificaRezervare("1", "paris", "business", 1000, "nu", lista)
+    lista = modifica_rezervare("1", "paris", "business", 1000, "nu", lista)
 
-    rezervareVerificare = getById("1", lista)
+    rezervare_verificare = get_by_id("1", lista)
 
-    assert getId(rezervareVerificare) == "1"
-    assert getNume(rezervareVerificare) == "paris"
-    assert getClasa(rezervareVerificare) != "economy"
-    assert getPret(rezervareVerificare) == 1000
-    assert getCheckin(rezervareVerificare) == "nu"
+    assert get_id(rezervare_verificare) == "1"
+    assert get_nume(rezervare_verificare) == "paris"
+    assert get_clasa(rezervare_verificare) != "economy"
+    assert get_pret(rezervare_verificare) == 1000
+    assert get_checkin(rezervare_verificare) == "nu"
 
-def testGetById():
+
+def test_get_by_id():
     lista = []
-    lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista)
-    lista = adaugaRezervare("2", "bucuresti", "economy plus", 50, "da", lista)
+    lista = adauga_rezervare("1", "londra", "economy", 200, "da", lista)
+    lista = adauga_rezervare("2", "bucuresti", "economy plus", 50, "da", lista)
 
-    assert getById("2", lista) is not None
-    assert getById("3", lista) is None
-
-
+    assert get_by_id("2", lista) is not None
+    assert get_by_id("3", lista) is None
