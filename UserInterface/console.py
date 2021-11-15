@@ -123,7 +123,7 @@ def runMenu(lista):
         elif optiune == "6":
             uiPretMaxPeClasa(lista,undolist,redolist)
         elif optiune == "7":
-            uiOrdonareDescresPret(lista,undolist,redolist)
+            lista = uiOrdonareDescresPret(lista,undolist,redolist)
         elif optiune == "8":
             uiSumaPerNume(lista,undolist,redolist)
         elif optiune == "u":

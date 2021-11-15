@@ -92,13 +92,25 @@ def sumaPerNume(lista):
 def do_undo(lista,undolist,redolist):
         if undolist:
             top_undo = undolist.pop()
+<<<<<<< HEAD
             redolist.append(top_undo)
             return top_undo
         return lista
+=======
+            redolist.append(lista)
+            return top_undo
+        return None
+>>>>>>> eccca752e9dd7980411f599c54423e46d94c6959
 
 def do_redo(lista,undolist,redolist):
     if redolist:
         top_redo = redolist.pop()
+<<<<<<< HEAD
         undolist.append(top_redo)
         return top_redo
     return lista
+=======
+        undolist.append(lista)
+        return top_redo
+    return None
+>>>>>>> eccca752e9dd7980411f599c54423e46d94c6959

@@ -1,14 +1,15 @@
 from Domain.rezervare import getClasa, getPret, getId
 from Logic.CRUD import getById, adaugaRezervare
 from Logic.functionalitati import transformareClasaSuperioara, ieftinireRezervariCuProcentaj, pretMaxPeClasa, \
-    ordonareDescresPret, sumaPerNume
+    ordonareDescresPret, sumaPerNume, do_undo, do_redo
+
 
 def testTransformareClasaSuperioara():
     lista = []
     lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista)
     lista = adaugaRezervare("2", "bucuresti", "economy plus", 50, "da", lista)
 
-    lista = transformareClasaSuperioara("londra",lista)
+    lista = transformareClasaSuperioara("londra", lista)
 
     assert getClasa(getById("1", lista)) == "economy plus"
     assert getClasa(getById("2", lista)) == "economy plus"
@@ -68,4 +69,41 @@ def testSumaPerNume():
     assert rezultat["milano"] == 290
     assert rezultat["barcelona"] == 1050
 
+def testUndo_Redo():
+    lista = []
+    undolist = []
+    redolist = []
+    lista = adaugaRezervare("1", "londra", "economy", 200, "da", lista, undolist, redolist)
+    lista = adaugaRezervare("2", "barcelona", "economy plus", 50, "da", lista, undolist, redolist)
+    lista = adaugaRezervare("3", "milano", "economy", 290, "nu", lista, undolist, redolist)
+
+    assert lista == [[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')],[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')]]
+
+    lista = transformareClasaSuperioara("londra",lista)
+
+    assert lista == [[('id','1'),('nume','londra'),('clasa','economy plus'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')],[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')]]
+
+    lista = do_undo(lista,undolist,redolist)
+
+    assert lista == [[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')],[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')]]
+
+    lista = do_undo(lista,undolist,redolist)
+
+    assert lista == [[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')]]
+
+    lista = do_redo(lista,undolist,redolist)
+
+    assert lista == [[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')],[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')]]
+
+    lista = ordonareDescresPret(lista)
+
+    assert lista == [[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')],[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')]]
+
+    lista = do_undo(lista,undolist,redolist)
+
+    assert lista == [[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')],[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')]]
+
+    lista = do_redo(lista,undolist,redolist)
+
+    assert lista == [[('id','3'),('nume','milano'),('clasa','economy'),('pret',290),('checkin','nu')],[('id','1'),('nume','londra'),('clasa','economy'),('pret',200),('checkin','da')],[('id','2'),('nume','barcelona'),('clasa','economy plus'),('pret',50),('checkin','da')]]
 
