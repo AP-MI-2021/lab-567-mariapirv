@@ -90,15 +90,15 @@ def ui_pret_max_pe_clasa(lista, undolist, redolist):
     return rezultat
 
 
-def uiOrdonareDescresPret(lista, undolist, redolist):
+def ui_ordonare_descres_pret(lista, undolist, redolist):
     rezultat = ordonare_descres_pret(lista)
-    showAll(rezultat)
+    show_all(rezultat)
     undolist.append(lista)
     redolist.clear()
     return rezultat
 
 
-def uiSumaPerNume(lista, undolist, redolist):
+def ui_suma_per_nume(lista, undolist, redolist):
     rezultat = suma_per_nume(lista)
     for nume in rezultat:
         print("{} are suma preturilor {}".format(nume, rezultat[nume]))
@@ -107,12 +107,12 @@ def uiSumaPerNume(lista, undolist, redolist):
     return rezultat
 
 
-def showAll(lista):
+def show_all(lista):
     for rezervare in lista:
         print(to_string(rezervare))
 
 
-def runMenu(lista):
+def run_menu(lista):
     undolist = []
     redolist = []
     while True:
@@ -132,9 +132,9 @@ def runMenu(lista):
         elif optiune == "6":
             ui_pret_max_pe_clasa(lista, undolist, redolist)
         elif optiune == "7":
-            lista = uiOrdonareDescresPret(lista, undolist, redolist)
+            lista = ui_ordonare_descres_pret(lista, undolist, redolist)
         elif optiune == "8":
-            uiSumaPerNume(lista, undolist, redolist)
+            ui_suma_per_nume(lista, undolist, redolist)
         elif optiune == "u":
             if len(undolist) > 0:
                 lista = do_undo(lista, undolist, redolist)
@@ -146,7 +146,7 @@ def runMenu(lista):
             else:
                 print("Nu se poate face redo!")
         elif optiune == "a":
-            showAll(lista)
+            show_all(lista)
         elif optiune == "x":
             break
         else:

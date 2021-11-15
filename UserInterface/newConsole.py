@@ -1,8 +1,8 @@
 from Logic.CRUD import adauga_rezervare, modifica_rezervare, sterge_rezervare
-from UserInterface.console import showAll
+from UserInterface.console import show_all
 
 
-def newMenu(lista):
+def new_menu(lista):
     while True:
         comanda = input("Ce comenzi doriti sa efectuati despartite prin ';' ?")
         categorii = comanda.split(";")
@@ -19,7 +19,7 @@ def newMenu(lista):
                     except IndexError as ie:
                         print("Eroare: {}".format(ie))
                 elif camp[0] == "show all":
-                    showAll(lista)
+                    show_all(lista)
                 elif camp[0] == "modify":
                     try:
                         lista = modifica_rezervare(camp[1], camp[2], camp[3], camp[4], camp[5], lista)
